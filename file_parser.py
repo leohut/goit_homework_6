@@ -1,6 +1,7 @@
 import sys
 from pathlib import Path
 
+# визначаємо списки, які будуть використовуватись для зберігання файлів з певними розширеннями
 JPEG_IMAGES = []
 JPG_IMAGES = []
 PNG_IMAGES = []
@@ -41,31 +42,35 @@ REGISTER_EXTENSION = {
     'AVI' : AVI_VIDEO,
     'MOV' : MOV_VIDEO,
     'MKV' : MKV_VIDEO,
-    'ZIP': ARCHIVES
+    'ZIP': ARCHIVES,
+    'GZ': ARCHIVES,
+    'TAR': ARCHIVES,
 }
 
+# оголошуємо змінні, які будуть використовуватись для зберігання папок
 FOLDERS = []
 EXTENSION = set()
 UNKNOWN = set()
 
+# приймаємо назву файлу і повертаємо його розширення в верхньому регістрі без крапки
 def get_extension(filename: str) -> str:
-    return Path(filename).suffix[1:].upper()  # перетворюємо розширення файлу на назву папки jpg -> JPG
+    return Path(filename).suffix[1:].upper()
 
+# рекурсивно скануємо всі файли та папки в цій папці
 def scan(folder: Path) -> None:
     for item in folder.iterdir():
-        # Якщо це папка то додаємо її до списку FOLDERS і переходимо до наступного елемента папки
+
         if item.is_dir():
-            # перевіряємо, щоб папка не була тією в яку ми складаємо вже файли
+
             if item.name not in ('archives', 'video', 'audio', 'documents', 'images', 'MY_OTHER'):
                 FOLDERS.append(item)
-                # скануємо вкладену папку
                 scan(item)  # рекурсія
-            continue  # переходимо до наступного елементу в сканованій папці
-
-        #  Робота з файлом
-        ext = get_extension(item.name)  # беремо розширення файлу
-        fullname = folder / item.name  # беремо шлях до файлу
-        if not ext:  # якщо файл немає розширення то додаєм до невідомих
+            continue
+          
+        #  Робота з файлом. Якщо елемент є файлом, отримуємо його розширення
+        ext = get_extension(item.name)
+        fullname = folder / item.name
+        if not ext:
             MY_OTHER.append(fullname)
         else:
             try:
@@ -73,7 +78,6 @@ def scan(folder: Path) -> None:
                 EXTENSION.add(ext)
                 container.append(fullname)
             except KeyError:
-                # Якщо ми не зареєстрували розширення у REGISTER_EXTENSION, то додаємо до невідомих
                 UNKNOWN.add(ext)
                 MY_OTHER.append(fullname)
 
@@ -85,9 +89,23 @@ if __name__ == "__main__":
     print(f'Images jpeg: {JPEG_IMAGES}')
     print(f'Images jpg: {JPG_IMAGES}')
     print(f'Images svg: {SVG_IMAGES}')
-    print(f'Audio mp3: {MP3_AUDIO}')
-    print(f'Archives: {ARCHIVES}')
-
+    print(f'Audio mp3: {MP3_AUDIO}')   
+    print(f'Audio ogg: {OGG_AUDIO}')
+    print(f'Audio vav: {VAV_AUDIO}')
+    print(f'Audio amr: {AMR_AUDIO}')
+    print(f'Documents doc: {DOC_DOCUMENTS}')
+    print(f'Documents docx: {DOCX_DOCUMENTS}')
+    print(f'Documents pdf: {PDF_DOCUMENTS}')
+    print(f'Documents txt: {TXT_DOCUMENTS}')
+    print(f'Documents xlsx: {XLSX_DOCUMENTS}')
+    print(f'Documents pptx: {PPTX_DOCUMENTS}')    
+    print(f'Video mp4: {MP4_VIDEO}')  
+    print(f'Video avi: {AVI_VIDEO}')
+    print(f'Video mov: {MOV_VIDEO}')
+    print(f'Video mkv: {MKV_VIDEO}')   
+    print(f'Archives zip: {ARCHIVES}')
+    print(f'Archives gz: {ARCHIVES}')
+    print(f'Archives tar: {ARCHIVES}')
     print(f'Types of files in folder: {EXTENSION}')
     print(f'Unknown files of types: {UNKNOWN}')
     print(f'MY_OTHER: {MY_OTHER}')

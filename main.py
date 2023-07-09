@@ -40,13 +40,42 @@ def main(folder: Path):
     for file in parser.SVG_IMAGES:
         handle_media(file, folder / 'images' / 'SVG')
     for file in parser.MP3_AUDIO:
-        handle_media(file, folder / 'audio' / 'MP3')
-
+        handle_media(file, folder / 'audio' / 'MP3')      
+    for file in parser.OGG_AUDIO:
+        handle_media(file, folder / 'audio' / 'OGG')
+    for file in parser.VAV_AUDIO:
+        handle_media(file, folder / 'audio' / 'VAV')
+    for file in parser.AMR_AUDIO:
+        handle_media(file, folder / 'audio' / 'AMR')       
+    for file in parser.DOC_DOCUMENTS:
+        handle_media(file, folder / 'documents' / 'DOC')
+    for file in parser.DOCX_DOCUMENTS:
+        handle_media(file, folder / 'documents' / 'DOCX')
+    for file in parser.PDF_DOCUMENTS:
+        handle_media(file, folder / 'documents' / 'PDF')
+    for file in parser.TXT_DOCUMENTS:
+        handle_media(file, folder / 'documents' / 'TXT')
+    for file in parser.XLSX_DOCUMENTS:
+        handle_media(file, folder / 'documents' / 'XLSX')
+    for file in parser.PPTX_DOCUMENTS:
+        handle_media(file, folder / 'documents' / 'PPTX')       
+    for file in parser.MP4_VIDEO:
+        handle_media(file, folder / 'vieo' / 'MP4')
+    for file in parser.AVI_VIDEO:
+        handle_media(file, folder / 'vieo' / 'AVI')
+    for file in parser.MOV_VIDEO:
+        handle_media(file, folder / 'vieo' / 'MOV')
+    for file in parser.MKV_VIDEO:
+        handle_media(file, folder / 'vieo' / 'MKV')
+    for file in parser.ARCHIVES:
+        handle_media(file, folder / 'archives' / 'ZIP')
+    for file in parser.ARCHIVES:
+        handle_media(file, folder / 'archives' / 'GZ')
+    for file in parser.ARCHIVES:
+        handle_media(file, folder / 'archives' / 'TAR')
     for file in parser.MY_OTHER:
         handle_media(file, folder / 'MY_OTHER')
-    for file in parser.ARCHIVES:
-        handle_media(file, folder / 'ARCHIVES')
-
+        
     for folder in parser.FOLDERS[::-1]:
         handle_folder(folder)
 
