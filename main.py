@@ -68,20 +68,23 @@ def main(folder: Path):
     for file in parser.MKV_VIDEO:
         handle_media(file, folder / 'vieo' / 'MKV')
     for file in parser.ARCHIVES:
-        handle_media(file, folder / 'archives' / 'ZIP')
+        handle_archives(file, folder / 'archives' / 'ZIP')
     for file in parser.ARCHIVES:
-        handle_media(file, folder / 'archives' / 'GZ')
+        handle_archives(file, folder / 'archives' / 'GZ')
     for file in parser.ARCHIVES:
-        handle_media(file, folder / 'archives' / 'TAR')
+        handle_archives(file, folder / 'archives' / 'TAR')
     for file in parser.MY_OTHER:
-        handle_media(file, folder / 'MY_OTHER')
+        handle_other(file, folder / 'MY_OTHER')
         
     for folder in parser.FOLDERS[::-1]:
         handle_folder(folder)
-
-if __name__ == "__main__":
+        
+def run():
     if sys.argv[1]:
         folder_for_scan = Path(sys.argv[1])
         print(f'Start in folder: {folder_for_scan.resolve()}')
         main(folder_for_scan.resolve())
+
+if __name__ == "__main__":
+    run()
         
